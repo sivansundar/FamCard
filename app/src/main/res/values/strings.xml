@@ -2,4 +2,10 @@
     <string name="app_name">FamCard</string>
     <string name="get_cards_success_message">Yay! 🥳🎉 Your cards are here!🎈</string>
     <string name="error_state_swipe_down_text">Could not get your cards. Swipe down to refresh</string>
+    <string name="bdc_title_text">Big display Card with action</string>
+    <string name="bdc_description_text">This is a sample text for the subtitle that you can add to contextual cards</string>
+    <string name="bdc_action_btn_text">Action</string>
+    <string name="sc_title_text">Small Card with Arrow</string>
+    <string name="sdc_title_text">Small card display</string>
+    <string name="sdc_description_text">Description</string>
 </resources>

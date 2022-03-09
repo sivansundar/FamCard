@@ -4,6 +4,11 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Android/Projects/FamCard/app/src/main/res/layout/activity_main.xml" value="0.23020833333333332" />
+        <entry key="..\:/Android/Projects/FamCard/app/src/main/res/layout/item_big_display_card.xml" value="0.33" />
+        <entry key="..\:/Android/Projects/FamCard/app/src/main/res/layout/item_dynamic_width_card.xml" value="0.18697916666666667" />
+        <entry key="..\:/Android/Projects/FamCard/app/src/main/res/layout/item_image_card.xml" value="0.18697916666666667" />
+        <entry key="..\:/Android/Projects/FamCard/app/src/main/res/layout/item_small_card_with_arrow.xml" value="0.33" />
+        <entry key="..\:/Android/Projects/FamCard/app/src/main/res/layout/item_small_display_card.xml" value="0.25" />
         <entry key="..\:/Android/Projects/FamCard/app/src/main/res/layout/layout_error_state.xml" value="0.22" />
       </map>
     </option>
