@@ -14,6 +14,6 @@
         android:layout_height="wrap_content"
         android:text="Could not get your cards. Swipe down to refresh"
         android:textAlignment="center"
-        android:textSize="18sp" />
+        android:textSize="@dimen/_13ssp" />
 
 </LinearLayout>
