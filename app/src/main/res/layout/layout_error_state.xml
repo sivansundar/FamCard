@@ -12,7 +12,7 @@
         android:id="@+id/error_state_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Could not get your cards. Swipe down to refresh"
+        android:text="@string/error_state_swipe_down_text"
         android:textAlignment="center"
         android:textSize="@dimen/_13ssp" />
 

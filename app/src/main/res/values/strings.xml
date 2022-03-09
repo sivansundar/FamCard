@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">FamCard</string>
     <string name="get_cards_success_message">Yay! 🥳🎉 Your cards are here!🎈</string>
+    <string name="error_state_swipe_down_text">Could not get your cards. Swipe down to refresh</string>
 </resources>
