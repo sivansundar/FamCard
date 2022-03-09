@@ -1,11 +1,13 @@
 package com.sivan.famcard.data.remote
 
+import com.sivan.famcard.BuildConfig
 import com.sivan.famcard.data.remote.dto.CardGroups
+import com.sivan.famcard.util.DataState
 import retrofit2.http.GET
 
 interface FamCardApi {
 
     //Get details of a single investor
-    @GET("fefcfbeb-5c12-4722-94ad-b8f92caad1ad}")
+    @GET(BuildConfig.ENDPOINTURL)
     suspend fun getFamCards(): CardGroups
 }

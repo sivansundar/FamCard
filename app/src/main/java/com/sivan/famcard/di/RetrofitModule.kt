@@ -1,5 +1,6 @@
 package com.sivan.famcard.di
 
+import com.google.gson.GsonBuilder
 import com.sivan.famcard.BuildConfig
 import com.sivan.famcard.data.remote.FamCardApi
 import dagger.Module
@@ -20,9 +21,11 @@ object RetrofitModule {
     @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient) : Retrofit {
         return Retrofit.Builder()
-            .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl("")
-
+            .addConverterFactory(GsonConverterFactory.create(
+                GsonBuilder()
+                    .create()
+            ))
+            .baseUrl(BuildConfig.BASEURL)
             .client(okHttpClient)
             .build()
     }

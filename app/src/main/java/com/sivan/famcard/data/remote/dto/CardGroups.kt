@@ -2,7 +2,8 @@ package com.sivan.famcard.data.remote.dto
 
 import com.google.gson.annotations.SerializedName
 
-class CardGroups(
+data class CardGroups(
+    val card_groups : List<CardGroup>
 )
 
 data class CardGroup(
