@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/sc_with_arrow_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardElevation="@dimen/_8sdp"
+    app:cardUseCompatPadding="true">
+
+    <!--Check isScrollable. If yes, multiple cards and scroll horizontal-->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/sc_layout_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/placeholder_contact_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:src="@drawable/placeholder_contact_image"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/sc_title_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="24dp"
+            android:textSize="@dimen/_16ssp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/placeholder_contact_image"
+            app:layout_constraintEnd_toStartOf="@+id/sc_arrow_image"
+            app:layout_constraintStart_toEndOf="@+id/placeholder_contact_image"
+            app:layout_constraintTop_toTopOf="@+id/placeholder_contact_image"
+            tools:text="@string/sc_title_text" />
+
+        <ImageView
+            android:id="@+id/sc_arrow_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:src="@drawable/ic_round_arrow_forward_ios_24"
+            app:layout_constraintBottom_toBottomOf="@+id/sc_title_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/sc_title_text" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
