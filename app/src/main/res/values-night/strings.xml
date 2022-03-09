@@ -1,4 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">FamCard</string>
     <string name="get_cards_success_message">Yay! 🥳🎉 Your cards are here!🎈</string>
 </resources>
