@@ -35,7 +35,6 @@ class MainActivity : AppCompatActivity() {
                             hideLoading()
                             showErrorLayout()
                             mainViewModel.setRequestStatusMessage(it.message)
-
                         }
                         is DataState.Loading -> {
                             showLoading()

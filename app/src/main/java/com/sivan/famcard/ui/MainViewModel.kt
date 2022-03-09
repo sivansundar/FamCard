@@ -41,7 +41,7 @@ class MainViewModel @Inject constructor(
     fun getFamcards() {
         viewModelScope.launch {
             getFamCardsUseCase.invoke()
-                .catch { }
+                .catch { _famCardList.emit(DataState.Error(it.message.toString())) }
                 .collect {
                     _famCardList.emit(it)
                 }
