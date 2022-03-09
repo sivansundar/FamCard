@@ -1,8 +1,9 @@
-package com.sivan.famcard.domain.repository
+package com.sivan.famcard.data.remote.repository
 
 import com.sivan.famcard.data.remote.FamCardApi
 import com.sivan.famcard.data.remote.dto.CardGroups
-import com.sivan.famcard.data.remote.repository.FamCardRepo
+import com.sivan.famcard.domain.repository.FamCardRepo
+import com.sivan.famcard.util.DataState
 import javax.inject.Inject
 
 class FamCardRepoImpl @Inject constructor(

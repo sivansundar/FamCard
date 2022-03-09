@@ -1,9 +1,9 @@
-package com.sivan.famcard.data.remote.repository
+package com.sivan.famcard.domain.repository
 
 import com.sivan.famcard.data.remote.dto.CardGroups
 
-interface FamCardRepository {
 
+interface FamCardRepo {
     suspend fun getFamCards(): CardGroups
 
 }
