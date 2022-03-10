@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/bdc_root_layout"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/_350sdp"
+    android:layout_height="wrap_content"
+    app:cardUseCompatPadding="true"
     app:cardBackgroundColor="#454AA6"
     app:cardCornerRadius="@dimen/_10sdp">
 
@@ -169,7 +170,6 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="24dp"
             android:layout_marginBottom="24dp"
-            app:backgroundTint="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/bdc_options_layout"
             app:layout_constraintTop_toBottomOf="@+id/bdc_description_text"

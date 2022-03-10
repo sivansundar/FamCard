@@ -21,8 +21,8 @@ data class CardGroup(
         @SerializedName("HC3")
         BIG_DISPLAY_CARD,
 
-        @SerializedName("HC4")
-        CENTER_CARD,
+        @SerializedName("HC9")
+        DYNAMIC_WIDTH_CARD,
 
         @SerializedName("HC5")
         IMAGE_CARD,
@@ -88,12 +88,18 @@ data class Card(
 
 
 data class CardImage(
-    val image_type: String,
+    val image_type: ImageType,
     val asset_type: String? = null,
     val image_url: String? = null
 )
 
+enum class ImageType {
+    @SerializedName("ext")
+    EXTERNAL,
 
+    @SerializedName("asset")
+    ASSET
+}
 
 data class Gradient(
     val colors: List<String>,
