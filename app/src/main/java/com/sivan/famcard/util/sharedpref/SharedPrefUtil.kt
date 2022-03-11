@@ -23,7 +23,8 @@ class SharedPrefUtil @Inject constructor(@ApplicationContext context: Context) :
     }
 
     override fun getAllDismissedIds(): ArrayList<DismissedId> {
-        val json: String? = prefs.getString(DISMISSED_IDS, null)
+        val emptyList = Gson().toJson(ArrayList<DismissedId>())
+        val json: String? = prefs.getString(DISMISSED_IDS, emptyList)
         val type = object : TypeToken<ArrayList<DismissedId>>() {}.type
         return Gson().fromJson(json, type)
     }
