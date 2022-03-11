@@ -16,7 +16,7 @@ import com.sivan.famcard.databinding.LayoutCardRecyclerViewBinding
 class CardGroupAdapter(
     private val itemClickListenerWithCta: (List<Cta>) -> Unit,
     private val itemClickListenerWithUrl: (String) -> Unit,
-    private val itemClickListenerOnBigCard: (BIG_CARD_CLICK_TYPES) -> Unit
+    private val itemClickListenerOnBigCard: (BIG_CARD_CLICK_TYPES, Int) -> Unit
 ) :
     ListAdapter<CardGroup, CardGroupAdapter.MyCardGroupAdapterHolder>(PojoDiffCallback()) {
 
@@ -48,10 +48,11 @@ class CardGroupAdapter(
             position: Int,
             itemClickListenerWithCta: (List<Cta>) -> Unit,
             itemClickListenerWithUrl: (String) -> Unit,
-            itemClickListenerOnBigCard: (BIG_CARD_CLICK_TYPES) -> Unit
+            itemClickListenerOnBigCard: (BIG_CARD_CLICK_TYPES, Int) -> Unit
         ) {
             val item = getItem(position)
             val cardAdapter = CardAdapter(
+                item.id,
                 item.design_type, height = item.height
                     ?: 0,
                 itemClickListenerWithCta,
@@ -60,12 +61,17 @@ class CardGroupAdapter(
             )
 
 
+
             binding.childCardRv.apply {
-                layoutManager = LinearLayoutManager(
+                layoutManager = object : LinearLayoutManager(
                     context,
-                    LinearLayoutManager.HORIZONTAL,
+                    HORIZONTAL,
                     false
-                )
+                ) {
+                    override fun canScrollHorizontally(): Boolean {
+                        return item.is_scrollable
+                    }
+                }
 
                 adapter = cardAdapter
             }

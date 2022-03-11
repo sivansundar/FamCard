@@ -5,9 +5,9 @@
     android:id="@+id/bdc_root_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    app:cardCornerRadius="@dimen/_10sdp"
     app:cardUseCompatPadding="true"
-    app:cardBackgroundColor="#454AA6"
-    app:cardCornerRadius="@dimen/_10sdp">
+    tools:cardBackgroundColor="#454AA6">
 
     <!--Fixed height, full width-->
 

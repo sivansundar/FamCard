@@ -3,6 +3,10 @@ package com.sivan.famcard.ui
 import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.text.SpannableString
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +19,7 @@ import com.sivan.famcard.R
 import com.sivan.famcard.data.remote.dto.Card
 import com.sivan.famcard.data.remote.dto.CardGroup
 import com.sivan.famcard.data.remote.dto.Cta
+import com.sivan.famcard.data.remote.dto.Entity
 import com.sivan.famcard.databinding.ItemBigDisplayCardBinding
 import com.sivan.famcard.databinding.ItemDynamicWidthCardBinding
 import com.sivan.famcard.databinding.ItemImageCardBinding
@@ -30,11 +35,12 @@ enum class CardTransformState {
 }
 
 class CardAdapter(
+    private val container_id: Int,
     private val designType: CardGroup.DesignType,
     val height: Int = 0,
     val onItemClickListenerWithCta: (List<Cta>) -> Unit,
     val onItemClickListenerWithUrl: (String) -> Unit,
-    val onItemClickListenerOnBigCard: (BIG_CARD_CLICK_TYPES) -> Unit
+    val onItemClickListenerOnBigCard: (BIG_CARD_CLICK_TYPES, Int) -> Unit
 ) : ListAdapter<Card, CardAdapter.CardAdapterVH>(PojoDiffCallback()) {
 
     private var cardTransformState: CardTransformState = CardTransformState.SHRINK
@@ -101,11 +107,13 @@ class CardAdapter(
                 val binding = ItemSmallCardWithArrowBinding.bind(itemView)
                 binding.apply {
                     //Check alignment
-                    val title = item.title
-                    val description = item.description
 
-                    scTitleText.text = title
-                    scDescriptionText.text = description
+                    scTitleText.text =
+                        getFormattedText(item.formatted_title.text, item.formatted_title.entities)
+                    scDescriptionText.text = getFormattedText(
+                        item.formatted_description.text,
+                        item.formatted_description.entities
+                    )
                     placeholderContactImage.load(item.icon.image_url) {
                         placeholder(R.drawable.placeholder_image)
                         transformations(CircleCropTransformation())
@@ -124,43 +132,55 @@ class CardAdapter(
                 val binding = ItemBigDisplayCardBinding.bind(itemView)
                 val cta = item.cta.first()
 
-                binding.bdcActionBtn.apply {
-                    text = cta.text
-                    setTextColor(Color.parseColor(cta.text_color))
-                    setBackgroundColor(Color.parseColor(cta.bg_color))
-                }
-
-                binding.bdcActionBtn.setOnClickListener {
-                    if (item.cta.isNotEmpty()) {
-                        onItemClickListenerWithCta(
-                            item.cta
-                        )
+                binding.apply {
+                    bdcRootLayout.setCardBackgroundColor(Color.parseColor(item.bg_color))
+                    bdcImage.load(item.bg_image.image_url) {
+                        placeholder(R.drawable.fampaylogo)
                     }
-                }
 
-                binding.menuRemind.setOnClickListener {
-                    deleteCard(adapterPosition)
-                }
+                    bdcActionBtn.apply {
+                        text = cta.text
+                        setTextColor(Color.parseColor(cta.text_color))
+                        setBackgroundColor(Color.parseColor(cta.bg_color))
 
-                binding.menuDismiss.setOnClickListener {
-                    deleteCard(adapterPosition)
-                    onItemClickListenerOnBigCard(BIG_CARD_CLICK_TYPES.DISMISS)
-                }
+                        setOnClickListener {
+                            if (item.cta.isNotEmpty()) {
+                                onItemClickListenerWithCta(
+                                    item.cta
+                                )
+                            }
+                        }
 
-                binding.root.setOnLongClickListener {
-                    cardTransformState = if (cardTransformState == CardTransformState.SHRINK) {
-                        binding.bdcOptionsLayout.animateSlide(
-                            binding.root.width / 3
-                        )
-                        CardTransformState.EXPAND
-                    } else {
-                        binding.bdcOptionsLayout.animateSlide(0)
-                        CardTransformState.SHRINK
+                        menuRemind.setOnClickListener {
+                            deleteCard(adapterPosition)
+                        }
                     }
-                    true
-                }
 
-                binding.bdcTitleText.text = item.title
+                    menuDismiss.setOnClickListener {
+                        deleteCard(adapterPosition)
+                        onItemClickListenerOnBigCard(BIG_CARD_CLICK_TYPES.DISMISS, container_id)
+                    }
+
+                    root.setOnLongClickListener {
+                        cardTransformState = if (cardTransformState == CardTransformState.SHRINK) {
+                            binding.bdcOptionsLayout.animateSlide(
+                                binding.root.width / 3
+                            )
+                            CardTransformState.EXPAND
+                        } else {
+                            binding.bdcOptionsLayout.animateSlide(0)
+                            CardTransformState.SHRINK
+                        }
+                        true
+                    }
+
+                    bdcTitleText.text =
+                        getFormattedText(item.formatted_title.text, item.formatted_title.entities)
+                    bdcDescriptionText.text = getFormattedText(
+                        item.formatted_description.text,
+                        item.formatted_description.entities
+                    )
+                }
             }
         }
 
@@ -194,7 +214,11 @@ class CardAdapter(
                     smallCardImage.load(item.icon.image_url) {
                         transformations(CircleCropTransformation())
                     }
-                    sdcTitleText.text = item.title
+                    sdcTitleText.text =
+                        getFormattedText(
+                            item.formatted_title.text,
+                            item.formatted_title.entities
+                        )
                     root.setOnClickListener {
                         onItemClickListenerWithUrl(item.url)
                     }
@@ -216,6 +240,36 @@ class CardAdapter(
                 }
             }
         }
+    }
+
+    private fun getFormattedText(
+        text: String,
+        entities: List<Entity>
+    ): SpannableStringBuilder {
+        var result = SpannableStringBuilder()
+
+        if (text.contains("{}")) {
+            val text = text.split("{}")
+            for (index in entities.indices) {
+                val color = Color.parseColor(entities[index].color)
+                val spannableString = SpannableString(entities[index].text)
+                spannableString.setSpan(
+                    ForegroundColorSpan(color),
+                    0,
+                    entities[index].text.length,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+                result = result.append(text[index]).append(spannableString)
+            }
+            if (text.last() != result.last().toString()) {
+                result.append(text.last())
+            }
+            result.append()
+
+        } else {
+            result = result.append(text)
+        }
+        return result
     }
 
     private fun deleteCard(adapterPosition: Int) {

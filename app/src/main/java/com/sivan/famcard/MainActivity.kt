@@ -82,7 +82,7 @@ class MainActivity : AppCompatActivity() {
             launchItem(item)
         }
 
-        val onItemClickListenerOnBigCard: (BIG_CARD_CLICK_TYPES) -> Unit = { item ->
+        val onItemClickListenerOnBigCard: (BIG_CARD_CLICK_TYPES, Int) -> Unit = { item, id ->
 
 
             if (item == BIG_CARD_CLICK_TYPES.DISMISS) {
@@ -100,6 +100,7 @@ class MainActivity : AppCompatActivity() {
             onItemClickListenerWithUrl,
             onItemClickListenerOnBigCard
         )
+
         binding.cardContainerRv.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = mainAdapter
