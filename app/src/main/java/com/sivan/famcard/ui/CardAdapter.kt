@@ -134,10 +134,7 @@ class CardAdapter(
 
                 binding.apply {
                     bdcRootLayout.setCardBackgroundColor(Color.parseColor(item.bg_color))
-                    bdcImage.load(item.bg_image.image_url) {
-                        placeholder(R.drawable.fampaylogo)
-                    }
-
+                    bdcImage.load(item.bg_image.image_url)
                     bdcActionBtn.apply {
                         text = cta.text
                         setTextColor(Color.parseColor(cta.text_color))
