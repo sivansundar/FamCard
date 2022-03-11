@@ -3,8 +3,10 @@ package com.sivan.famcard.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sivan.famcard.data.remote.dto.CardGroups
+import com.sivan.famcard.domain.DismissedId
 import com.sivan.famcard.domain.usecases.GetFamCardsUseCase
 import com.sivan.famcard.util.DataState
+import com.sivan.famcard.util.sharedpref.SharedPrefUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,10 +17,12 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import java.util.ArrayList
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
+    private val sharedPrefUtil: SharedPrefUtil,
     private val getFamCardsUseCase: GetFamCardsUseCase
 ) : ViewModel() {
 
@@ -50,5 +54,14 @@ class MainViewModel @Inject constructor(
 
     suspend fun setRequestStatusMessage(message: String) {
         _requestStatusMessage.emit(message)
+    }
+
+    fun saveId(id : Int) {
+        val dismissedId = DismissedId(id)
+        sharedPrefUtil.saveDismissedId(dismissedId)
+    }
+
+    fun getDismissedID(): ArrayList<DismissedId> {
+        return sharedPrefUtil.getAllDismissedIds()
     }
 }
